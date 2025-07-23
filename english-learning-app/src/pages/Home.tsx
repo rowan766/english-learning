@@ -1,12 +1,15 @@
+// 文件位置: src/pages/Home.tsx
 import React, { useState, useCallback } from 'react';
 import { Card, Row, Col, Typography, Button, Space, Statistic, Divider } from 'antd';
+import { useNavigate } from 'react-router-dom'; // 添加这一行
 import { 
   UploadOutlined, 
   BookOutlined, 
   SoundOutlined, 
   TrophyOutlined,
   RocketOutlined,
-  FileTextOutlined
+  FileTextOutlined,
+  ReadOutlined // 添加这个图标
 } from '@ant-design/icons';
 import { FileUpload, Loading } from '@/components';
 import { useAppStore, useDictionaryStore, useSettingsStore } from '@/stores';
@@ -17,6 +20,7 @@ import type { UploadDocumentResponse, ProcessTextRequest } from '@/types';
 const { Title, Text, Paragraph } = Typography;
 
 const Home: React.FC = () => {
+  const navigate = useNavigate(); // 添加这一行
   const [processingText, setProcessingText] = useState(false);
   
   // 使用 Zustand stores
@@ -72,7 +76,7 @@ const Home: React.FC = () => {
           <RocketOutlined style={{ marginRight: '12px', color: '#1677ff' }} />
           英语学习助手
         </Title>
-        <Paragraph style={{ fontSize: '16px', color: '#fff', maxWidth: '600px', margin: '0 auto' }}>
+        <Paragraph style={{ fontSize: '16px', color: '#666', maxWidth: '600px', margin: '0 auto' }}>
           上传文档，智能处理英中对照，语音朗读助力学习，打造个人专属词典
         </Paragraph>
       </div>
@@ -150,8 +154,16 @@ const Home: React.FC = () => {
             <Divider />
 
             <Space direction="vertical" style={{ width: '100%' }}>
+              {/* 添加文章列表按钮 */}
               <Button
                 type="primary"
+                icon={<ReadOutlined />}
+                block
+                onClick={() => navigate('/articles')}
+              >
+                浏览文章列表
+              </Button>
+              <Button
                 icon={<BookOutlined />}
                 block
                 href="/dictionary"
