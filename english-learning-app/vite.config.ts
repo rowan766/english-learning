@@ -66,7 +66,7 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
         runtimeCaching: [
           {
-            urlPattern: /^https:\/\/api\.yourdomain\.com\/.*$/,
+            urlPattern: /^http:\/\/localhost:8002\/.*$/,
             handler: 'NetworkFirst',
             options: {
               cacheName: 'api-cache',
@@ -86,10 +86,11 @@ export default defineConfig({
     }
   },
   server: {
-    port: 3000,
+    port: 3001,        // 使用3001端口
+    host: '0.0.0.0',   // 允许外部访问
     proxy: {
       '/api': {
-        target: 'http://localhost:8002', // 您的后端地址
+        target: 'http://localhost:8002',  // 代理到后端
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '')
       }
